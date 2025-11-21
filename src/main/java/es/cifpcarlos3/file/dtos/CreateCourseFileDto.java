@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonRootName("centro")
-public class CreateCourseJsonFileDto {
+public class CreateCourseFileDto {
     @JsonProperty("cursos")
     public List<Course> courses = new ArrayList<>();
 
