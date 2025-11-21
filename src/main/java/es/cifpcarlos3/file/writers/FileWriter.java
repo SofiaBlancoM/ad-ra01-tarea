@@ -5,5 +5,5 @@ import java.nio.file.Path;
 
 
 public interface FileWriter<T> {
-    void saveFile (T data, Path filePath);
+    void write (T data, Path filePath);
 }
