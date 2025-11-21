@@ -1,17 +1,46 @@
 package es.cifpcarlos3;
 
+import es.cifpcarlos3.file.readers.FileReader;
+import es.cifpcarlos3.models.Course;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+    private static final String DAW_FILE_NAME = "lista_alumnado_DAW1.csv";
+    private static final String DAM_FILE_NAME = "lista_alumnado_DAM2.txt";
+
+    private static final String DAM_COURSE_NAME = "DAM";
+    private static final String DAW_COURSE_NAME = "DAW";
+
+    private static final String DAM_FILE_SEPARATOR = ",";
+    private static final String DAW_FILE_SEPARATOR = ";";
+
+    private static final String CITY_FILTER = "Cartagena";
+
+    public static void main(String[] args) {
+
+        Path rootProjectPath = Paths.get("").toAbsolutePath();
+
+        System.out.println("---------------------DAM---------------------------");
+        Course damCourse = FileReader.createCourseFromFile(
+                rootProjectPath.resolve(DAM_FILE_NAME),
+                DAM_COURSE_NAME,
+                DAM_FILE_SEPARATOR,
+                CITY_FILTER
+        );
+
+        System.out.println("---------------------DAW---------------------------");
+        Course dawCourse = FileReader.createCourseFromFile(
+                rootProjectPath.resolve(DAW_FILE_NAME),
+                DAW_COURSE_NAME,
+                DAW_FILE_SEPARATOR,
+                CITY_FILTER
+        );
+
     }
+
+
 }
