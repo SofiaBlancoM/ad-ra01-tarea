@@ -33,7 +33,7 @@ public class Main {
 
         Path outputPath = rootProjectPath.resolve(OUTPUT_FOLDER);
 
-        FileWriter binaryFileWriter = new BinaryFileWriter();
+        FileWriter<List<Course>> courseBinaryFileWriter = new BinaryFileWriter<>();
 
         System.out.println("---------------------DAM---------------------------");
         Course damCourse = FileReader.createCourseFromFile(
@@ -55,7 +55,8 @@ public class Main {
                 damCourse,
                 dawCourse);
 
-        binaryFileWriter.saveFile(courses, outputPath.resolve(STUDENTS_DAT));
+        courseBinaryFileWriter.saveFile(courses, outputPath.resolve(STUDENTS_DAT));
+
 
     }
 
