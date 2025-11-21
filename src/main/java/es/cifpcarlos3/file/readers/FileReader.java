@@ -21,11 +21,11 @@ public class FileReader {
             String currentLine;
 
             while((currentLine = reader.readLine()) !=null){
-                String cleanLine = currentLine.trim();
+                String cleanLine = cleanLine(currentLine);
 
                 String[] studentParts = cleanLine.split(fileSeparator);
 
-                String id = studentParts[0].trim();
+                int id = Integer.parseInt(studentParts[0].trim());
                 String surnames = studentParts[1].trim();
                 String name = studentParts[2].trim();
                 String city = studentParts[3].trim();
@@ -47,6 +47,14 @@ public class FileReader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String cleanLine (String currentLine) {
+
+        if (!currentLine.isEmpty() && currentLine.charAt(0) == '\uFEFF') {
+            return currentLine.substring(1).trim();
+        }
+        return currentLine.trim();
     }
 
 }
