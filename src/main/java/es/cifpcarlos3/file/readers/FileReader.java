@@ -13,6 +13,8 @@ public class FileReader {
 
     public static Course createCourseFromFile(Path filePath, String courseName, String fileSeparator, String filter) {
 
+        System.out.println("Leyendo fichero: " + filePath.getFileName() + "...");
+
         Course course = new Course();
         course.setName(courseName);
 

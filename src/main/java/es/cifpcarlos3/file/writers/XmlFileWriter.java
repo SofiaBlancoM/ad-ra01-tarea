@@ -12,6 +12,8 @@ public class XmlFileWriter<T> implements FileWriter<T> {
     @Override
     public void saveFile(T data, Path filePath) {
 
+        System.out.println("Generando fichero: " + filePath.getFileName() + "...");
+
         createFile(filePath);
 
         var xmlMapper = XmlMapper.builder()
@@ -20,6 +22,9 @@ public class XmlFileWriter<T> implements FileWriter<T> {
 
         try (OutputStream outputStream = Files.newOutputStream(filePath)) {
             xmlMapper.writeValue(outputStream, data);
+
+            System.out.println("Fichero " + filePath.getFileName() + " generado");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
