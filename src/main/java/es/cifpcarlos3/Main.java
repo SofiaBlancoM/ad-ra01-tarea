@@ -1,9 +1,12 @@
 package es.cifpcarlos3;
 
 import es.cifpcarlos3.file.readers.FileReader;
+import es.cifpcarlos3.file.writers.BinaryFileWriter;
+import es.cifpcarlos3.file.writers.FileWriter;
 import es.cifpcarlos3.models.Course;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -20,9 +23,17 @@ public class Main {
 
     private static final String CITY_FILTER = "Cartagena";
 
+    private static final String OUTPUT_FOLDER = "salida";
+
+    public static final String STUDENTS_DAT = "cursos.dat";
+
     public static void main(String[] args) {
 
         Path rootProjectPath = Paths.get("").toAbsolutePath();
+
+        Path outputPath = rootProjectPath.resolve(OUTPUT_FOLDER);
+
+        FileWriter binaryFileWriter = new BinaryFileWriter();
 
         System.out.println("---------------------DAM---------------------------");
         Course damCourse = FileReader.createCourseFromFile(
@@ -39,6 +50,12 @@ public class Main {
                 DAW_FILE_SEPARATOR,
                 CITY_FILTER
         );
+
+        List<Course> courses = List.of(
+                damCourse,
+                dawCourse);
+
+        binaryFileWriter.saveFile(courses, outputPath.resolve(STUDENTS_DAT));
 
     }
 
