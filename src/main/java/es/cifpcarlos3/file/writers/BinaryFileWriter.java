@@ -15,7 +15,7 @@ public class BinaryFileWriter<T> implements FileWriter<T> {
 
         FileHelper.createIfNotExists(filePath);
 
-        System.out.println("Escribiendo en el fichero: " + filePath.getFileName() + "...");
+        System.out.println("Escribiendo en el fichero " + filePath.getFileName() + "...");
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(filePath.toFile());
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)){
