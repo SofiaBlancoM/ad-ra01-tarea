@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,6 +18,7 @@ import java.time.LocalDate;
         includeFieldNames = false,
         doNotUseGetters = true
 )
+//Modelo de datos para el estudiante
 public class Student implements Serializable {
     @JsonProperty(value = "id")
     private int id;
@@ -36,6 +36,7 @@ public class Student implements Serializable {
 
     @Serial
     @JsonIgnore
+    //Establece la versión del modelo a serializar en binario
     private static final long serialVersionUID = 1L;
 
 }

@@ -23,6 +23,7 @@ import java.util.List;
         includeFieldNames = false,
         doNotUseGetters = true
 )
+//Modelo de datos para el curso
 public class Course implements Serializable {
 
     @JsonProperty("nombre")
@@ -36,6 +37,7 @@ public class Course implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    //Añade un estudiante a la lista
     public void addStudent(Student student){
         this.students.add(student);
     }

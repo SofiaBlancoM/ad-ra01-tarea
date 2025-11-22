@@ -19,6 +19,8 @@ import java.util.List;
         includeFieldNames = false,
         doNotUseGetters = true
 )
+//Utilizamos el patrón DTO (Data Transfer Object) para envolver
+// los datos que queremos escribir con un formato determinado
 public class CreateCourseFileDto implements Serializable {
     @JsonProperty("cursos")
     @JacksonXmlElementWrapper(localName = "cursos")
