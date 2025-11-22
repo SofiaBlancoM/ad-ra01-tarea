@@ -1,46 +1,29 @@
 package es.cifpcarlos3.file.writers;
 
-import tools.jackson.databind.DeserializationFeature;
-import tools.jackson.databind.SerializationFeature;
+import es.cifpcarlos3.file.helpers.FileHelper;
 import tools.jackson.databind.json.JsonMapper;
-
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
+//Escribe datos en un fichero en json
 public class JsonFileWriter<T> implements FileWriter<T>{
 
+    //Clase que utilizaremos para escribir en el fichero
+    private final JsonMapper mapper;
 
-    @Override
-    public void saveFile(T data, Path filePath) {
-
-        createFile(filePath);
-
-        var mapper = JsonMapper.builder()
-                .enable(SerializationFeature.WRAP_ROOT_VALUE)
-                .enable(DeserializationFeature.UNWRAP_ROOT_VALUE)
-                .build();
-
-        mapper.writeValue(filePath, data);
-
+    public JsonFileWriter(JsonMapper mapper) {
+        this.mapper = mapper;
     }
 
-    private static void createFile(Path filePath) {
+    @Override
+    public void write(T data, Path filePath) {
 
-        try {
-            Path parentDirectory = filePath.getParent();
+        //Crea el fichero si no existe
+        FileHelper.createIfNotExists(filePath);
+        System.out.println("Escribiendo en el fichero " + filePath.getFileName() + "...");
 
-            if(parentDirectory != null) {
-                Files.createDirectories(parentDirectory);
-            }
-
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-            }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //Escribe los datos en el fichero
+        mapper.writeValue(filePath, data);
+        System.out.println("Se ha terminado de escribir en el fichero " + filePath.getFileName());
 
     }
 
