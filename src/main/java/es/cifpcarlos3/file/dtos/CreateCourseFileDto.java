@@ -9,6 +9,7 @@ import lombok.ToString;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 @AllArgsConstructor
@@ -18,7 +19,7 @@ import java.util.List;
         includeFieldNames = false,
         doNotUseGetters = true
 )
-public class CreateCourseFileDto {
+public class CreateCourseFileDto implements Serializable {
     @JsonProperty("cursos")
     @JacksonXmlElementWrapper(localName = "cursos")
     @JacksonXmlProperty(localName = "curso")

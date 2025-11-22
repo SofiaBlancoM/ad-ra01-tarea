@@ -58,9 +58,9 @@ public class Main {
         Path outputPath = rootProjectPath.resolve(OUTPUT_FOLDER);
 
         //Binario
-        FileWriter<List<Course>> coursesBinaryFileWriter = new BinaryFileWriter<>();
+        FileWriter<CreateCourseFileDto> coursesBinaryFileWriter = new BinaryFileWriter<>();
 
-        FileReader<List<Course>> coursesBinaryFileReader = new BinaryFileReader<>();
+        FileReader<CreateCourseFileDto> coursesBinaryFileReader = new BinaryFileReader<>(CreateCourseFileDto.class);
 
         //JSON
         var jsonMapper = JsonMapper.builder()
@@ -108,21 +108,21 @@ public class Main {
                 damCourse,
                 dawCourse);
 
+        CreateCourseFileDto coursesDto = new CreateCourseFileDto();
+        coursesDto.courses = courses;
+
         //Binario conjunto
-        coursesBinaryFileWriter.write(courses, outputPath.resolve(COURSES_DAT));
+        coursesBinaryFileWriter.write(coursesDto, outputPath.resolve(COURSES_DAT));
 
         //JSON conjunto
-        CreateCourseFileDto dto = new CreateCourseFileDto();
-        dto.courses = courses;
-
-        coursesJsonFileWriter.write(dto, outputPath.resolve(COURSES_JSON));
+        coursesJsonFileWriter.write(coursesDto, outputPath.resolve(COURSES_JSON));
 
         //JSON separados
         courseJsonFileWriter.write(dawCourse, outputPath.resolve(DAW_JSON));
         courseJsonFileWriter.write(damCourse, outputPath.resolve(DAM_JSON));
 
         //XML conjunto
-        coursesXmlFileWriter.write(dto, outputPath.resolve(COURSES_XML));
+        coursesXmlFileWriter.write(coursesDto, outputPath.resolve(COURSES_XML));
 
         //XML separados
         courseXmlFileWriter.write(dawCourse, outputPath.resolve(DAW_XML));

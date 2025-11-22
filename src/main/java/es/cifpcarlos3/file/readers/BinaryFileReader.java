@@ -5,6 +5,12 @@ import java.nio.file.Path;
 
 public class BinaryFileReader<T> implements FileReader<T> {
 
+    private final Class<T> type;
+
+    public BinaryFileReader(Class<T> type) {
+        this.type = type;
+    }
+
     @Override
     public T read(Path filePath) {
 
@@ -13,7 +19,8 @@ public class BinaryFileReader<T> implements FileReader<T> {
         try (FileInputStream fileInputStream = new FileInputStream(filePath.toFile());
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
 
-            return (T) objectInputStream.readObject();
+            var data = objectInputStream.readObject();
+            return type.cast(data);
 
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
