@@ -1,6 +1,5 @@
 package es.cifpcarlos3.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -9,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -31,8 +30,7 @@ public class Student implements Serializable {
     @JsonProperty(value = "edad")
     private int age;
     @JsonProperty(value = "fechaRegistro")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate registeredAt;
+    private LocalDateTime registeredAt;
 
     @Serial
     @JsonIgnore

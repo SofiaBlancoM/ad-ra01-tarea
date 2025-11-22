@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CourseFileLoader {
 
@@ -40,7 +40,7 @@ public class CourseFileLoader {
                 int age = Integer.parseInt(studentParts[4].trim());
 
                 //Crea el alumno
-                Student student = new Student(id, surnames, name, city, age, LocalDate.now());
+                Student student = new Student(id, surnames, name, city, age, LocalDateTime.now());
 
                 //Añade el estudiante al curso si es de Cartagena
                 if(city.equalsIgnoreCase(filter)){

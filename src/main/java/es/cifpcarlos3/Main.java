@@ -1,5 +1,6 @@
 package es.cifpcarlos3;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import es.cifpcarlos3.file.dtos.CreateCourseFileDto;
 import es.cifpcarlos3.file.CourseFileLoader;
 import es.cifpcarlos3.file.readers.BinaryFileReader;
@@ -15,9 +16,9 @@ import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.SerializationFeature;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.dataformat.xml.XmlMapper;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Main {
@@ -49,6 +50,9 @@ public class Main {
     private static final String DAM_XML = "dam2.xml";
     private static final String DAW_XML = "daw1.xml";
 
+    //Formato de la fecha por defecto
+    private static final String DATE_TIME_PATTERN = "dd-MM-yyyy HH:mm:ss";
+
     public static void main(String[] args) {
 
         //Ruta por defecto del projecto
@@ -63,10 +67,7 @@ public class Main {
         FileReader<CreateCourseFileDto> coursesBinaryFileReader = new BinaryFileReader<>(CreateCourseFileDto.class);
 
         //JSON
-        var jsonMapper = JsonMapper.builder()
-                .enable(SerializationFeature.WRAP_ROOT_VALUE)
-                .enable(DeserializationFeature.UNWRAP_ROOT_VALUE)
-                .build();
+        var jsonMapper = buildJsonMapper();
 
         FileWriter<CreateCourseFileDto> coursesJsonFileWriter = new JsonFileWriter<>(jsonMapper);
         FileWriter<Course> courseJsonFileWriter = new JsonFileWriter<>(jsonMapper);
@@ -75,9 +76,7 @@ public class Main {
         FileReader<Course> courseJsonFileReader = new JsonFileReader<>(jsonMapper, Course.class);
 
         //XML
-        var xmlMapper = XmlMapper.builder()
-                .enable(SerializationFeature.INDENT_OUTPUT)
-                .build();
+        var xmlMapper = buildXmlMapper();
 
         FileWriter<CreateCourseFileDto> coursesXmlFileWriter = new XmlFileWriter<>(xmlMapper);
         FileWriter<Course> courseXmlFileWriter = new XmlFileWriter<>(xmlMapper);
@@ -139,6 +138,25 @@ public class Main {
         System.out.println(courseXmlFileReader.read(outputPath.resolve(DAW_XML)));
         System.out.println(courseXmlFileReader.read(outputPath.resolve(DAM_XML)));
 
+    }
+
+    //Configuramos el mapper para poner un formato por defcto para LocalDateTime
+    private static XmlMapper buildXmlMapper() {
+        return XmlMapper.builder()
+                .withConfigOverride(LocalDateTime.class, cfg ->
+                        cfg.setFormat(JsonFormat.Value.forPattern(DATE_TIME_PATTERN)))
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .build();
+    }
+
+    //Configuramos el mapper para poner un formato por defcto para LocalDateTime
+    private static JsonMapper buildJsonMapper() {
+        return JsonMapper.builder()
+                .withConfigOverride(LocalDateTime.class, cfg ->
+                        cfg.setFormat(JsonFormat.Value.forPattern(DATE_TIME_PATTERN)))
+                .enable(SerializationFeature.WRAP_ROOT_VALUE)
+                .enable(DeserializationFeature.UNWRAP_ROOT_VALUE)
+                .build();
     }
 
 }
